@@ -2,7 +2,8 @@
 <resources>
 
     <string name="app_name">Glaucoma</string>
-    <string name="action_settings">Settings</string>
+    <string name="syntest">Synfältstest</string>
+    <string name="pupillreaktion">Pupillreaktionstest</string>
     <string name="hello_world">Hello world!</string>
-
+    
 </resources>
