@@ -5,8 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -23,12 +21,12 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void startPupillActivity() {
+	public void startPupilActivity() {
 		Intent i =  new Intent(this, PupilActivity.class);
 		startActivity(i);
 	}
 	
-	public void startSyntestActivity() {
+	public void startVisionFieldActivity() {
 		Intent i =  new Intent(this, VisionFieldActivity.class);
 		startActivity(i);
 	}
@@ -37,9 +35,9 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if (item.getItemId() == R.id.pupillreaktion) {
-			startPupillActivity();
+			startPupilActivity();
 		} else if (item.getItemId() == R.id.syntest) {
-			startSyntestActivity();
+			startVisionFieldActivity();
 		}
 		
 		return super.onOptionsItemSelected(item);
