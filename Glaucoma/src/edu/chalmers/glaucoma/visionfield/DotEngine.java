@@ -24,7 +24,7 @@ public class DotEngine extends Observable {
 		pointList = new LinkedList<PointF>();
 		
 		// Create a list of points that have to be tested.
-		for (int i=0;i<20;i++) {
+		for (int i=0;i<10;i++) {
 			pointList.add(generateDot());
 		}
 		
@@ -46,25 +46,35 @@ public class DotEngine extends Observable {
 		PointF point = null;
 		
 		while ((point = nextDot()) != null ) {
+			
+			System.out.println("ENGINE: " + point.toString());
+			
 			dotRegistered = false;
 			
+			// Wait 1 sec
 			long time = System.currentTimeMillis() + 1000;
 			while (time > System.currentTimeMillis());
 			
-			notifyObservers(point);
+			// Give a new point
 			setChanged();
+			notifyObservers(point);
+			clearChanged();
 			
+			// Wait 0.2 sec (the time the dot should be visible)
 			time = System.currentTimeMillis() + 200;
 			while (time > System.currentTimeMillis());
 			
-			notifyObservers(null);
+			// Give null to observers (remove the dot)
 			setChanged();
+			notifyObservers(null);
+			clearChanged();
 			
+			// Wait 3 sec (the time the user can answer)
 			time = System.currentTimeMillis() + 3000;
 			while (!dotRegistered && time > System.currentTimeMillis());
 			
-			seenPoints.add(point);
-			
+			if (dotRegistered)
+				seenPoints.add(point);
 			
 		}
 		
