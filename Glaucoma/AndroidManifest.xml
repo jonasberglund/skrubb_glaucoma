@@ -29,7 +29,9 @@
         <activity 
          	android:name="edu.chalmers.glaucoma.PupilActivity" />
         <activity 
-            android:name="edu.chalmers.glaucoma.VisionFieldActivity"/>
+            android:name="edu.chalmers.glaucoma.VisionFieldActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
     </application>
 
 </manifest>

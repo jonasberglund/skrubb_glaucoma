@@ -4,36 +4,141 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Random;
 
 import android.graphics.PointF;
 
 public class DotEngine extends Observable {
 	
-	private Random random = new Random();
 	private int width, height;
-	private boolean dotRegistered = false;
+	private boolean dotRegistered;
 	private LinkedList<PointF> pointList;
 	private List<PointF> seenPoints;
+	private int originX = 0, originY = 0, numOfDots;
 	
 	public DotEngine(int width, int height) {
 		this.width = width;
 		this.height = height;
 		
+		// Set the screen ratio to 3:2. (60 degrees x 40 degrees)
+		if (this.width > this.height) {
+			int halfWidth = width/2;
+			this.width = (3 * this.height) / 2;
+			originX = halfWidth-(this.width/2);
+		} else if (this.width < this.height) {
+			int halfHeight = height/2;
+			this.height = (2 * this.width) / 3;
+			originY = halfHeight-(this.height/2);
+		} else {
+			// TODO
+		}
+		
 		seenPoints = new LinkedList<PointF>();
 		pointList = new LinkedList<PointF>();
 		
 		// Create a list of points that have to be tested.
-		for (int i=0;i<10;i++) {
-			pointList.add(generateDot());
-		}
+		pointList = createDotList();
+		numOfDots = pointList.size();
 		
-		Collections.shuffle(pointList);
 		
 	}
 	
-	private PointF generateDot() {
-		return new PointF(random.nextInt(width), random.nextInt(height));
+	private LinkedList<PointF> createDotList() {
+		
+		LinkedList<PointF> relativePointList = new LinkedList<PointF>();
+		
+		// (relative) points to be tested.
+		relativePointList.add(new PointF(0.1f, 0.5f));
+		relativePointList.add(new PointF(0.2f, 0.5f));
+		relativePointList.add(new PointF(0.3f, 0.5f));
+		relativePointList.add(new PointF(0.4f, 0.5f));
+		relativePointList.add(new PointF(0.6f, 0.5f));
+		relativePointList.add(new PointF(0.7f, 0.5f));
+		relativePointList.add(new PointF(0.8f, 0.5f));
+		relativePointList.add(new PointF(0.9f, 0.5f));
+		
+		relativePointList.add(new PointF(0.5f, 0.1f));
+		relativePointList.add(new PointF(0.5f, 0.2f));
+		relativePointList.add(new PointF(0.5f, 0.3f));
+		relativePointList.add(new PointF(0.5f, 0.4f));
+		relativePointList.add(new PointF(0.5f, 0.6f));
+		relativePointList.add(new PointF(0.5f, 0.7f));
+		relativePointList.add(new PointF(0.5f, 0.8f));
+		relativePointList.add(new PointF(0.5f, 0.9f));
+		
+//		// Left upper quadrant
+//		relativePointList.add(new PointF(0.1f, 0.6f));
+//		relativePointList.add(new PointF(0.2f, 0.6f));
+//		relativePointList.add(new PointF(0.3f, 0.6f));
+//		relativePointList.add(new PointF(0.4f, 0.6f));
+//		
+//		relativePointList.add(new PointF(0.2f, 0.7f));
+//		relativePointList.add(new PointF(0.3f, 0.7f));
+//		relativePointList.add(new PointF(0.4f, 0.7f));
+//		
+//		relativePointList.add(new PointF(0.3f, 0.8f));
+//		relativePointList.add(new PointF(0.4f, 0.8f));
+//		
+//		relativePointList.add(new PointF(0.3f, 0.9f));
+//		relativePointList.add(new PointF(0.4f, 0.9f));
+//		
+//		// Left lower quadrant
+//		relativePointList.add(new PointF(0.1f, 0.4f));
+//		relativePointList.add(new PointF(0.2f, 0.4f));
+//		relativePointList.add(new PointF(0.3f, 0.4f));
+//		relativePointList.add(new PointF(0.4f, 0.4f));
+//		
+//		relativePointList.add(new PointF(0.2f, 0.3f));
+//		relativePointList.add(new PointF(0.3f, 0.3f));
+//		relativePointList.add(new PointF(0.4f, 0.3f));
+//		
+//		relativePointList.add(new PointF(0.3f, 0.2f));
+//		relativePointList.add(new PointF(0.4f, 0.2f));
+//		
+//		relativePointList.add(new PointF(0.3f, 0.1f));
+//		relativePointList.add(new PointF(0.4f, 0.1f));
+//		
+//		// Right upper quadrant
+//		relativePointList.add(new PointF(0.9f, 0.6f));
+//		relativePointList.add(new PointF(0.8f, 0.6f));
+//		relativePointList.add(new PointF(0.7f, 0.6f));
+//		relativePointList.add(new PointF(0.6f, 0.6f));
+//		
+//		relativePointList.add(new PointF(0.8f, 0.7f));
+//		relativePointList.add(new PointF(0.7f, 0.7f));
+//		relativePointList.add(new PointF(0.6f, 0.7f));
+//		
+//		relativePointList.add(new PointF(0.7f, 0.8f));
+//		relativePointList.add(new PointF(0.6f, 0.8f));
+//		
+//		relativePointList.add(new PointF(0.7f, 0.9f));
+//		relativePointList.add(new PointF(0.6f, 0.9f));
+//		
+//		// Right lower quadrant
+//		relativePointList.add(new PointF(0.9f, 0.4f));
+//		relativePointList.add(new PointF(0.8f, 0.4f));
+//		relativePointList.add(new PointF(0.7f, 0.4f));
+//		relativePointList.add(new PointF(0.6f, 0.4f));
+//		
+//		relativePointList.add(new PointF(0.8f, 0.3f));
+//		relativePointList.add(new PointF(0.7f, 0.3f));
+//		relativePointList.add(new PointF(0.6f, 0.3f));
+//		
+//		relativePointList.add(new PointF(0.7f, 0.2f));
+//		relativePointList.add(new PointF(0.6f, 0.2f));
+//		
+//		relativePointList.add(new PointF(0.7f, 0.1f));
+//		relativePointList.add(new PointF(0.6f, 0.1f));
+			
+		LinkedList<PointF> list = new LinkedList<PointF>();
+		
+		// Add points
+		for (PointF p : relativePointList)
+			list.add(new PointF(originX+p.x*width, originY+p.y*height));
+		
+		// Shuffle the list.
+		Collections.shuffle(list);
+		
+		return list;
 	}
 	
 	public PointF nextDot() {
@@ -41,13 +146,15 @@ public class DotEngine extends Observable {
 		
 	}
 	
+	public int getNumOfDots() {
+		return numOfDots;
+	}
+	
 	public void runTest() {
 		
 		PointF point = null;
 		
 		while ((point = nextDot()) != null ) {
-			
-			System.out.println("ENGINE: " + point.toString());
 			
 			dotRegistered = false;
 			

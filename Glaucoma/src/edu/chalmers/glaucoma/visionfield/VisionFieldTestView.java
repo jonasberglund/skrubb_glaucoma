@@ -28,8 +28,10 @@ public class VisionFieldTestView extends View {
 		paint.setStrokeWidth(2);
 		
 		// Draw a cross on the screen.
-		canvas.drawLine(canvas.getWidth()/2, (canvas.getHeight()/2)-10, canvas.getWidth()/2, (canvas.getHeight()/2)+10, paint);
-		canvas.drawLine((canvas.getWidth()/2)-10, canvas.getHeight()/2, (canvas.getWidth()/2)+10,canvas.getHeight()/2, paint);
+		canvas.drawLine(getWidth()/2, (getHeight()/2)-10, 
+				getWidth()/2, (getHeight()/2)+10, paint);
+		canvas.drawLine((getWidth()/2)-10, getHeight()/2, 
+				(getWidth()/2)+10,getHeight()/2, paint);
 		
 		// Set the paint value for the dot.
 		paint.setStrokeWidth(5);
