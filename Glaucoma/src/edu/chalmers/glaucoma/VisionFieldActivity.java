@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.graphics.PointF;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Toast;
 import edu.chalmers.glaucoma.visionfield.DotEngine;
@@ -22,9 +23,27 @@ public class VisionFieldActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Set view.
 		view = new VisionFieldTestView(this);
 		setContentView(view);
 	}
+	
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if ((keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) && testIsRunning) {
+			
+			// Register dot.
+			engine.registerDot();
+			
+			return true;
+			
+		} else {
+			
+			return super.onKeyDown(keyCode, event);
+		}
+		
+	}
+	
 	
 	public boolean onTouchEvent(MotionEvent e) {
 		
@@ -33,7 +52,7 @@ public class VisionFieldActivity extends Activity{
 			if (testIsRunning) {
 				
 				// Register dot.
-				engine.registerDot();
+//				engine.registerDot();
 				
 			} else {
 				
@@ -57,14 +76,18 @@ public class VisionFieldActivity extends Activity{
 		Toast.makeText(this, text, Toast.LENGTH_LONG).show();
 	}
 	
-	private class VisionFieldTestTask extends AsyncTask<Integer, Object, Integer> implements Observer {
+	private class VisionFieldTestTask extends AsyncTask<Integer, Object, String> implements Observer {
 
 		@Override
-		protected Integer doInBackground(Integer... params) {
+		protected String doInBackground(Integer... params) {
 			
 			engine.addObserver(VisionFieldTestTask.this);
 			engine.runTest();
-			return engine.getResult().size();
+			testIsRunning = false;
+			
+			int totDots = engine.getNumOfDots();
+			
+			return engine.getResult().size() + "/" + totDots;
 		}
 		
 		@Override
@@ -81,7 +104,7 @@ public class VisionFieldActivity extends Activity{
 		}
 		
 		@Override
-		protected void onPostExecute(Integer result) {
+		protected void onPostExecute(String result) {
 			showInToast("Result: " + result);
 		}
 
