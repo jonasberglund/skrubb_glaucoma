@@ -1,5 +1,7 @@
 package edu.chalmers.glaucoma.visionfield;
 
+import java.util.Map;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -7,13 +9,12 @@ import android.graphics.Paint;
 import android.graphics.PointF;
 import android.view.View;
 
-public class VisionFieldTestView extends View {
+public class VisionFieldResultView extends View {
 	
-	// Instance variables.
 	private Paint paint = new Paint();
-	private PointF dot = null;
+	private Map<PointF, Boolean> resultMap = null;
 
-	public VisionFieldTestView(Context context) {
+	public VisionFieldResultView(Context context) {
 		super(context);
 		
 		// Set the background color
@@ -21,7 +22,7 @@ public class VisionFieldTestView extends View {
 	}
 	
 	private void drawCross(Canvas canvas, int x, int y, int color) {
-		
+
 		// Save the current paint color
 		int tempColor = paint.getColor();
 		
@@ -44,25 +45,22 @@ public class VisionFieldTestView extends View {
 		// Draw a cross on the screen.
 		drawCross(canvas, getWidth()/2, getHeight()/2, Color.WHITE);
 		
-		// Set the paint value for the dot.
+		// Set the paint value for the dots.
 		paint.setStrokeWidth(5);
-		paint.setColor(Color.WHITE);
 		
-		// Draw the dot.
-		if (dot != null)
-			canvas.drawPoint(dot.x, dot.y, paint);
+		// Draw points in resultMap...
+		for (PointF p : resultMap.keySet() ) {
+			paint.setColor( resultMap.get(p) ? Color.GREEN : Color.RED );
+			canvas.drawPoint(p.x, p.y, paint);
+		}
 		
 	}
 	
-	public void drawDot(PointF p) {
+	public void showResult(Map<PointF, Boolean> resultMap) {
 		
-		// Set new dot and invalidate (in order to call onDraw())
-		dot = p;
+		// Set result map and invalidate (in order to call onDraw())
+		this.resultMap = resultMap;
 		invalidate();
-	}
-	
-	public void removeDot() {
-		drawDot(null);
 	}
 
 }
