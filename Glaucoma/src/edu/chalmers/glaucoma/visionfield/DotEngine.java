@@ -9,9 +9,11 @@ import android.graphics.PointF;
 
 public class DotEngine extends Observable {
 	
+	// Instance variables.
 	private int width, height;
 	private boolean dotRegistered;
 	private LinkedList<PointF> pointList;
+	private LinkedList<PointF> originalPointList;
 	private List<PointF> seenPoints;
 	private int originX = 0, originY = 0, numOfDots;
 	
@@ -36,9 +38,9 @@ public class DotEngine extends Observable {
 		pointList = new LinkedList<PointF>();
 		
 		// Create a list of points that have to be tested.
-		pointList = createDotList();
+		originalPointList = createDotList();
+		pointList = (LinkedList<PointF>) originalPointList.clone();
 		numOfDots = pointList.size();
-		
 		
 	}
 	
@@ -65,69 +67,69 @@ public class DotEngine extends Observable {
 		relativePointList.add(new PointF(0.5f, 0.8f));
 		relativePointList.add(new PointF(0.5f, 0.9f));
 		
-//		// Left upper quadrant
-//		relativePointList.add(new PointF(0.1f, 0.6f));
-//		relativePointList.add(new PointF(0.2f, 0.6f));
-//		relativePointList.add(new PointF(0.3f, 0.6f));
-//		relativePointList.add(new PointF(0.4f, 0.6f));
-//		
-//		relativePointList.add(new PointF(0.2f, 0.7f));
-//		relativePointList.add(new PointF(0.3f, 0.7f));
-//		relativePointList.add(new PointF(0.4f, 0.7f));
-//		
-//		relativePointList.add(new PointF(0.3f, 0.8f));
-//		relativePointList.add(new PointF(0.4f, 0.8f));
-//		
-//		relativePointList.add(new PointF(0.3f, 0.9f));
-//		relativePointList.add(new PointF(0.4f, 0.9f));
-//		
-//		// Left lower quadrant
-//		relativePointList.add(new PointF(0.1f, 0.4f));
-//		relativePointList.add(new PointF(0.2f, 0.4f));
-//		relativePointList.add(new PointF(0.3f, 0.4f));
-//		relativePointList.add(new PointF(0.4f, 0.4f));
-//		
-//		relativePointList.add(new PointF(0.2f, 0.3f));
-//		relativePointList.add(new PointF(0.3f, 0.3f));
-//		relativePointList.add(new PointF(0.4f, 0.3f));
-//		
-//		relativePointList.add(new PointF(0.3f, 0.2f));
-//		relativePointList.add(new PointF(0.4f, 0.2f));
-//		
-//		relativePointList.add(new PointF(0.3f, 0.1f));
-//		relativePointList.add(new PointF(0.4f, 0.1f));
-//		
-//		// Right upper quadrant
-//		relativePointList.add(new PointF(0.9f, 0.6f));
-//		relativePointList.add(new PointF(0.8f, 0.6f));
-//		relativePointList.add(new PointF(0.7f, 0.6f));
-//		relativePointList.add(new PointF(0.6f, 0.6f));
-//		
-//		relativePointList.add(new PointF(0.8f, 0.7f));
-//		relativePointList.add(new PointF(0.7f, 0.7f));
-//		relativePointList.add(new PointF(0.6f, 0.7f));
-//		
-//		relativePointList.add(new PointF(0.7f, 0.8f));
-//		relativePointList.add(new PointF(0.6f, 0.8f));
-//		
-//		relativePointList.add(new PointF(0.7f, 0.9f));
-//		relativePointList.add(new PointF(0.6f, 0.9f));
-//		
-//		// Right lower quadrant
-//		relativePointList.add(new PointF(0.9f, 0.4f));
-//		relativePointList.add(new PointF(0.8f, 0.4f));
-//		relativePointList.add(new PointF(0.7f, 0.4f));
-//		relativePointList.add(new PointF(0.6f, 0.4f));
-//		
-//		relativePointList.add(new PointF(0.8f, 0.3f));
-//		relativePointList.add(new PointF(0.7f, 0.3f));
-//		relativePointList.add(new PointF(0.6f, 0.3f));
-//		
-//		relativePointList.add(new PointF(0.7f, 0.2f));
-//		relativePointList.add(new PointF(0.6f, 0.2f));
-//		
-//		relativePointList.add(new PointF(0.7f, 0.1f));
-//		relativePointList.add(new PointF(0.6f, 0.1f));
+		// Left upper quadrant
+		relativePointList.add(new PointF(0.1f, 0.6f));
+		relativePointList.add(new PointF(0.2f, 0.6f));
+		relativePointList.add(new PointF(0.3f, 0.6f));
+		relativePointList.add(new PointF(0.4f, 0.6f));
+		
+		relativePointList.add(new PointF(0.2f, 0.7f));
+		relativePointList.add(new PointF(0.3f, 0.7f));
+		relativePointList.add(new PointF(0.4f, 0.7f));
+		
+		relativePointList.add(new PointF(0.3f, 0.8f));
+		relativePointList.add(new PointF(0.4f, 0.8f));
+		
+		relativePointList.add(new PointF(0.3f, 0.9f));
+		relativePointList.add(new PointF(0.4f, 0.9f));
+		
+		// Left lower quadrant
+		relativePointList.add(new PointF(0.1f, 0.4f));
+		relativePointList.add(new PointF(0.2f, 0.4f));
+		relativePointList.add(new PointF(0.3f, 0.4f));
+		relativePointList.add(new PointF(0.4f, 0.4f));
+		
+		relativePointList.add(new PointF(0.2f, 0.3f));
+		relativePointList.add(new PointF(0.3f, 0.3f));
+		relativePointList.add(new PointF(0.4f, 0.3f));
+		
+		relativePointList.add(new PointF(0.3f, 0.2f));
+		relativePointList.add(new PointF(0.4f, 0.2f));
+		
+		relativePointList.add(new PointF(0.3f, 0.1f));
+		relativePointList.add(new PointF(0.4f, 0.1f));
+		
+		// Right upper quadrant
+		relativePointList.add(new PointF(0.9f, 0.6f));
+		relativePointList.add(new PointF(0.8f, 0.6f));
+		relativePointList.add(new PointF(0.7f, 0.6f));
+		relativePointList.add(new PointF(0.6f, 0.6f));
+		
+		relativePointList.add(new PointF(0.8f, 0.7f));
+		relativePointList.add(new PointF(0.7f, 0.7f));
+		relativePointList.add(new PointF(0.6f, 0.7f));
+		
+		relativePointList.add(new PointF(0.7f, 0.8f));
+		relativePointList.add(new PointF(0.6f, 0.8f));
+		
+		relativePointList.add(new PointF(0.7f, 0.9f));
+		relativePointList.add(new PointF(0.6f, 0.9f));
+		
+		// Right lower quadrant
+		relativePointList.add(new PointF(0.9f, 0.4f));
+		relativePointList.add(new PointF(0.8f, 0.4f));
+		relativePointList.add(new PointF(0.7f, 0.4f));
+		relativePointList.add(new PointF(0.6f, 0.4f));
+		
+		relativePointList.add(new PointF(0.8f, 0.3f));
+		relativePointList.add(new PointF(0.7f, 0.3f));
+		relativePointList.add(new PointF(0.6f, 0.3f));
+		
+		relativePointList.add(new PointF(0.7f, 0.2f));
+		relativePointList.add(new PointF(0.6f, 0.2f));
+		
+		relativePointList.add(new PointF(0.7f, 0.1f));
+		relativePointList.add(new PointF(0.6f, 0.1f));
 			
 		LinkedList<PointF> list = new LinkedList<PointF>();
 		
@@ -142,12 +144,17 @@ public class DotEngine extends Observable {
 	}
 	
 	public PointF nextDot() {
-		return pointList.poll();
 		
+		// Poll a PointF from the point list.
+		return pointList.poll();
 	}
 	
 	public int getNumOfDots() {
 		return numOfDots;
+	}
+	
+	public List<PointF> getTestDots() {
+		return originalPointList;
 	}
 	
 	public void runTest() {
@@ -187,7 +194,7 @@ public class DotEngine extends Observable {
 		
 	}
 	
-	public List<PointF> getResult() {
+	public List<PointF> getSeenDots() {
 		if (pointList.size() == 0)
 			return seenPoints;
 		else
