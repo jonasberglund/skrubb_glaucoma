@@ -6,5 +6,8 @@
     <string name="pupillreaktion">Pupillreaktionstest</string>
     <string name="hello_world">Hello world!</string>
     <string name="start">Start</string>
+    <string name="distanceHeader">Distance</string>
+    <string name="distanceMessage">The distance you need to keep is: </string>
+    <string name="distanceButton">Got it, start the test!</string>
     
 </resources>
