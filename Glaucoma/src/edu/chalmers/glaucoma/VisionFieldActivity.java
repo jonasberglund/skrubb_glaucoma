@@ -63,12 +63,20 @@ public class VisionFieldActivity extends Activity{
 				DisplayMetrics dm = new DisplayMetrics();
 			    getWindowManager().getDefaultDisplay().getMetrics(dm);
 				
-			    double xp = dm.heightPixels;
-			    double xpd = dm.ydpi;
+			    double xp = dm.widthPixels;
+			    double xpd = dm.xdpi;
+			    double yp = dm.heightPixels;
+			    double ypd = dm.ydpi;
 			    float angle = 40;
+			    int dist = 0;
 			    
-			    int dist = distance.calcDist(xp, xpd, angle);
-			    //Toast.makeText(this, getString(R.string.distanceMessage)+ dist, Toast.LENGTH_LONG).show();
+			    if(xp<yp){
+			    	dist = distance.calcDist(xp, xpd, angle);
+			    }
+			    else{
+			    	dist = distance.calcDist(yp, ypd, angle);
+			    }
+			    	//Toast.makeText(this, getString(R.string.distanceMessage)+ dist, Toast.LENGTH_LONG).show();
 			    
 			    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 			    alertBuilder.setTitle(getString(R.string.distanceHeader));
@@ -103,6 +111,7 @@ public class VisionFieldActivity extends Activity{
 			testIsRunning = true;
 			engine.addObserver(VisionFieldTestTask.this);
 			engine.runTest();
+			engine.runMissed();
 			testIsRunning = false;
 			
 			int totDots = engine.getNumOfDots();
@@ -132,7 +141,7 @@ public class VisionFieldActivity extends Activity{
 			// Set seen dots to 'true'
 			for (PointF p : engine.getSeenDots())
 				resultMap.put(p, true);
-			
+						
 			// Set engine to null.
 			engine = null;
 			

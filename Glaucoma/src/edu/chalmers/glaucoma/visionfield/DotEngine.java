@@ -14,8 +14,12 @@ public class DotEngine extends Observable {
 	private boolean dotRegistered;
 	private LinkedList<PointF> pointList;
 	private LinkedList<PointF> originalPointList;
+	private LinkedList<PointF> missedPoints;
 	private List<PointF> seenPoints;
 	private int originX = 0, originY = 0, numOfDots;
+	private boolean missedTest = false;
+	private boolean flag = false;
+	private int seenPos = 0;
 	
 	public DotEngine(int width, int height) {
 		this.width = width;
@@ -36,6 +40,7 @@ public class DotEngine extends Observable {
 		
 		seenPoints = new LinkedList<PointF>();
 		pointList = new LinkedList<PointF>();
+		missedPoints = new LinkedList<PointF>();
 		
 		// Create a list of points that have to be tested.
 		originalPointList = createDotList();
@@ -146,7 +151,23 @@ public class DotEngine extends Observable {
 	public PointF nextDot() {
 		
 		// Poll a PointF from the point list.
-		return pointList.poll();
+		if(!missedTest)
+			return pointList.poll();
+		else
+		{
+			//If the missed-test is running, pull dots from seen and missed dots.
+			//Requires atleast one seen point.
+			if(flag){
+				if(seenPoints.get(seenPos)== null)
+					seenPos = 0;
+				flag = false;
+				return seenPoints.get(seenPos++);
+			}
+			else
+				flag = true;
+				return missedPoints.poll();
+		}
+			
 	}
 	
 	public int getNumOfDots() {
@@ -187,13 +208,27 @@ public class DotEngine extends Observable {
 			time = System.currentTimeMillis() + 3000;
 			while (!dotRegistered && time > System.currentTimeMillis());
 			
-			if (dotRegistered)
-				seenPoints.add(point);
-			
+			// Add seen dots to a list. Missed dots are added to another.
+			if(!missedTest){
+				if (dotRegistered)
+					seenPoints.add(point);
+				else
+					missedPoints.add(point);
+			}
+			//If missed-test is running, missed points should not be added again.
+			else{
+				if(dotRegistered)
+					seenPoints.add(point);
+			}
 		}
 		
 	}
 	
+	public void runMissed(){
+		missedTest = true;
+		runTest();
+		missedTest = false;
+	}
 	public List<PointF> getSeenDots() {
 		if (pointList.size() == 0)
 			return seenPoints;

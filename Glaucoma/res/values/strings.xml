@@ -6,8 +6,8 @@
     <string name="pupillreaktion">Pupillreaktionstest</string>
     <string name="hello_world">Hello world!</string>
     <string name="start">Start</string>
-    <string name="distanceHeader">Distance</string>
-    <string name="distanceMessage">The distance you need to keep is: </string>
-    <string name="distanceButton">Got it, start the test!</string>
+    <string name="distanceHeader">Synfältstest instruktioner</string>
+    <string name="distanceMessage">1. Håll telefonen framför ETT öga på det givna avståndet.\n2. Fokusera blicken på krysset på skärmen.\n3. Tryck på volymknappen när du ser en prick.\nAvståndet du behöver hålla är ca:</string>
+    <string name="distanceButton">Okej, starta testet!</string>
     
 </resources>
