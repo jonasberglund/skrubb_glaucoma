@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
 		 button_vision.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startSyntestActivity();
+				startVisionFieldActivity();
 			}
 		});
 		 
@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 		 button_pupil.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startPupillActivity();
+				startPupilActivity();
 			}
 		});
          
