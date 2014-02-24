@@ -217,7 +217,7 @@ public class DotEngine extends Observable {
 			}
 			//If missed-test is running, missed points should not be added again.
 			else{
-				if(dotRegistered)
+				if(dotRegistered && flag)
 					seenPoints.add(point);
 			}
 		}
