@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 
@@ -12,6 +14,25 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		//Vision button
+		 final Button button_vision = (Button) findViewById(R.id.button_start_vision);
+		 button_vision.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startSyntestActivity();
+			}
+		});
+		 
+		//Pupil button
+		 final Button button_pupil = (Button) findViewById(R.id.button_start_pupil);
+		 button_pupil.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startPupillActivity();
+			}
+		});
+         
 	}
 
 	@Override

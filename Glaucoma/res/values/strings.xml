@@ -6,5 +6,7 @@
     <string name="pupillreaktion">Pupillreaktionstest</string>
     <string name="hello_world">Hello world!</string>
     <string name="start">Start</string>
+    <string name="welcome_title">Välkommen!</string>
+    <string name="welcome_text">Med hjälp av den här appen kan du testa din syn på ett enkelt tidsminimalistiskt sätt. Den är till för att hjälpa dig upptäcka om du har något som tyder på en försämrad syn, vilket kan vara svårt att upptäcka själv i vardagen. Ett mindre synfel på ena ögat kompenseras ofta upp av det andra ögat och det kan därför dröja ganska länga innan man själv märker av att något är fel. Med hjälp av denna app kan du testa ögonen var för sig och du kan få en indikation på om det kan vara läge för att besöka en ögonläkare för ett mer genomgående syntest.\n\nVi rekommenderar att göra dessa tester regelbundet och att du har i åtanke att denna app inte ger dig någon diagnos på bra eller mindre bra syn, utan istället är till för att upptäcka misstankar om synfel i ett tidigt statie.</string>
     
 </resources>
