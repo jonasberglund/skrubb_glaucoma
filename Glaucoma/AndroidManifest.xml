@@ -7,6 +7,15 @@
     <uses-sdk
         android:minSdkVersion="16"
         android:targetSdkVersion="19" />
+    
+    <!--  <permission
+        android:name="android.permission.FLASHLIGHT"
+        android:permissionGroup="android.permission-group.HARDWARE_CONTROLS"
+        android:protectionLevel="normal" /> -->
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    
 
     <application
         android:allowBackup="true"
@@ -22,10 +31,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
-         	android:name="edu.chalmers.glaucoma.PupilActivity" />
-        <activity 
-            android:name="edu.chalmers.glaucoma.VisionFieldActivity"/>
+        <activity android:name="edu.chalmers.glaucoma.PupilActivity" />
+        <activity android:name="edu.chalmers.glaucoma.VisionFieldActivity" />
+        <activity
+            android:name="edu.chalmers.glaucoma.FlashLightActivity"
+            android:label="@string/title_activity_flash_light" >
+        </activity>
     </application>
 
 </manifest>

@@ -32,6 +32,12 @@ public class MainActivity extends Activity {
 		Intent i =  new Intent(this, VisionFieldActivity.class);
 		startActivity(i);
 	}
+	public void startFlashLightActivity(){
+		Intent i =  new Intent(this, FlashLightActivity.class);
+		startActivity(i);
+	
+		
+	}
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -40,6 +46,9 @@ public class MainActivity extends Activity {
 			startPupillActivity();
 		} else if (item.getItemId() == R.id.syntest) {
 			startSyntestActivity();
+		}
+		else if (item.getItemId() == R.id.lamptest) {
+			startFlashLightActivity();
 		}
 		
 		return super.onOptionsItemSelected(item);

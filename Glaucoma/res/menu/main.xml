@@ -12,5 +12,11 @@
         android:showAsAction="never"
         android:title="@string/syntest"
 		/>
+    <item
+        android:id="@+id/lamptest"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/lamptest"
+		/>
 
 </menu>

@@ -5,5 +5,8 @@
     <string name="syntest">Synfältstest</string>
     <string name="pupillreaktion">Pupillreaktionstest</string>
     <string name="hello_world">Hello world!</string>
-    
+    <string name="lamptest">lamptest</string>
+    <string name="title_activity_flash_light">FlashLightActivity</string>
+    <string name="action_settings">Settings</string>
+
 </resources>
