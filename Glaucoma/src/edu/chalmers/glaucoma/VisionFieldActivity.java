@@ -5,14 +5,18 @@ import java.util.Observable;
 import java.util.Observer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.PointF;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import edu.chalmers.glaucoma.visionfield.DotEngine;
 import edu.chalmers.glaucoma.visionfield.VisionFieldTestView;
+import edu.chalmers.glaucoma.visionfield.VisionFieldDistance;
 
 public class VisionFieldActivity extends Activity{
 
@@ -53,6 +57,39 @@ public class VisionFieldActivity extends Activity{
 			
 			if (!testIsRunning) {
 				
+				//Get the distance needed for the test				
+				VisionFieldDistance distance = new VisionFieldDistance();
+				
+				DisplayMetrics dm = new DisplayMetrics();
+			    getWindowManager().getDefaultDisplay().getMetrics(dm);
+				
+			    double xp = dm.widthPixels;
+			    double xpd = dm.xdpi;
+			    double yp = dm.heightPixels;
+			    double ypd = dm.ydpi;
+			    float angle = 40;
+			    int dist = 0;
+			    
+			    if(xp<yp){
+			    	dist = distance.calcDist(xp, xpd, angle);
+			    }
+			    else{
+			    	dist = distance.calcDist(yp, ypd, angle);
+			    }
+			    	//Toast.makeText(this, getString(R.string.distanceMessage)+ dist, Toast.LENGTH_LONG).show();
+			    
+			    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
+			    alertBuilder.setTitle(getString(R.string.distanceHeader));
+			    alertBuilder.setMessage(getString(R.string.distanceMessage)+ dist +"mm\n");
+			    alertBuilder.setPositiveButton(getString(R.string.distanceButton),
+			      new DialogInterface.OnClickListener() {
+			       public void onClick(DialogInterface dialog, int number) {
+			        // Only close the dialog
+			       }
+			      });
+			    AlertDialog infoDialog = alertBuilder.create();
+			    infoDialog.show();
+			    				
 				// Initialize the dot engine
 				if (engine == null)
 					engine = new DotEngine(testView.getWidth(), testView.getHeight());
@@ -74,6 +111,7 @@ public class VisionFieldActivity extends Activity{
 			testIsRunning = true;
 			engine.addObserver(VisionFieldTestTask.this);
 			engine.runTest();
+			engine.runMissed();
 			testIsRunning = false;
 			
 			int totDots = engine.getNumOfDots();
@@ -103,7 +141,7 @@ public class VisionFieldActivity extends Activity{
 			// Set seen dots to 'true'
 			for (PointF p : engine.getSeenDots())
 				resultMap.put(p, true);
-			
+						
 			// Set engine to null.
 			engine = null;
 			
