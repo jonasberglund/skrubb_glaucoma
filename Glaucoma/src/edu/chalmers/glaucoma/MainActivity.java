@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-
 public class MainActivity extends Activity {
 
 	@Override
@@ -21,7 +20,7 @@ public class MainActivity extends Activity {
 		 button_vision.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startSyntestActivity();
+				startVisionFieldActivity();
 			}
 		});
 		 
@@ -30,7 +29,7 @@ public class MainActivity extends Activity {
 		 button_pupil.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				startPupillActivity();
+				startPupilActivity();
 			}
 		});
          
@@ -43,12 +42,12 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void startPupillActivity() {
+	public void startPupilActivity() {
 		Intent i =  new Intent(this, PupilActivity.class);
 		startActivity(i);
 	}
 	
-	public void startSyntestActivity() {
+	public void startVisionFieldActivity() {
 		Intent i =  new Intent(this, VisionFieldActivity.class);
 		startActivity(i);
 	}
@@ -57,9 +56,9 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
 		if (item.getItemId() == R.id.pupillreaktion) {
-			startPupillActivity();
+			startPupilActivity();
 		} else if (item.getItemId() == R.id.syntest) {
-			startSyntestActivity();
+			startVisionFieldActivity();
 		}
 		
 		return super.onOptionsItemSelected(item);
