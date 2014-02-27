@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
 	}
 	
 	public void startPupilActivity() {
-		Intent i =  new Intent(this, PupilActivity.class);
+		Intent i =  new Intent(this, PupilMonitorActivity.class);
 		startActivity(i);
 	}
 	

@@ -73,4 +73,6 @@ $RECYCLE.BIN/
 *.cab
 *.msi
 *.msm
-*.msp
+
+# External folder
+OpenCV-2.4.8-android-sdk/*
