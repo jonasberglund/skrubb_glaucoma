@@ -21,7 +21,6 @@ import edu.chalmers.glaucoma.visionfield.VisionFieldDistance;
 public class VisionFieldActivity extends Activity{
 
 	private VisionFieldTestView testView = null;
-	
 	private DotEngine engine = null;
 	private boolean testIsRunning = false;
 	
@@ -34,6 +33,9 @@ public class VisionFieldActivity extends Activity{
 		setContentView(testView);
 	}
 	
+	/**
+	 * If the volume button was clicked, onKeyDown tells the DotEngine that the user saw the dot.
+	 */
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		
@@ -41,16 +43,16 @@ public class VisionFieldActivity extends Activity{
 			
 			// Register dot.
 			engine.registerDot();
-			
 			return true;
 			
 		} else {
-			
 			return super.onKeyDown(keyCode, event);
 		}
-		
 	}
 	
+	/**
+	 * Shows information and starts the test.
+	 */
 	public boolean onTouchEvent(MotionEvent e) {
 		
 		if (e.getAction() == MotionEvent.ACTION_DOWN) {
@@ -70,23 +72,25 @@ public class VisionFieldActivity extends Activity{
 			    float angle = 40;
 			    int dist = 0;
 			    
-			    if(xp<yp){
+			    if (xp<yp) {
 			    	dist = distance.calcDist(xp, xpd, angle);
-			    }
-			    else{
+			    
+			    } else {
 			    	dist = distance.calcDist(yp, ypd, angle);
 			    }
-			    	//Toast.makeText(this, getString(R.string.distanceMessage)+ dist, Toast.LENGTH_LONG).show();
 			    
 			    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 			    alertBuilder.setTitle(getString(R.string.distanceHeader));
 			    alertBuilder.setMessage(getString(R.string.distanceMessage)+ dist +"mm\n");
 			    alertBuilder.setPositiveButton(getString(R.string.distanceButton),
-			      new DialogInterface.OnClickListener() {
-			       public void onClick(DialogInterface dialog, int number) {
-			        // Only close the dialog
-			       }
+			      
+			    	new DialogInterface.OnClickListener() {
+				    	public void onClick(DialogInterface dialog, int number) {
+				    		// Close the dialog.
+				    	}
 			      });
+			    
+			    // Create and show the dialog.
 			    AlertDialog infoDialog = alertBuilder.create();
 			    infoDialog.show();
 			    				
@@ -103,12 +107,17 @@ public class VisionFieldActivity extends Activity{
 		return true;
 	}
 	
+	/**
+	 * VisionFieldTestTask is a private class that runs the test engine. 
+	 */
 	private class VisionFieldTestTask extends AsyncTask<Integer, Object, String> implements Observer {
 
 		@Override
 		protected String doInBackground(Integer... params) {
-
+			
 			testIsRunning = true;
+			
+			// Listen to the engine by adding this class to the list of observers.
 			engine.addObserver(VisionFieldTestTask.this);
 			engine.runTest();
 			engine.runMissed();
@@ -119,6 +128,10 @@ public class VisionFieldActivity extends Activity{
 			return engine.getSeenDots().size() + "/" + totDots;
 		}
 		
+		/**
+		 * onProgressUpdate is meant to receive PointF objects, which will be drawn on the screen.
+		 * onProgressUpdate is used by the update() method.
+		 */
 		@Override
 		protected void onProgressUpdate(Object... progress) {
 			
@@ -129,6 +142,10 @@ public class VisionFieldActivity extends Activity{
 			}
 		}
 		
+		/**
+		 * onPostExecute executes when the test is done. The method shows the result of the test by
+		 * using the VisionFieldTestResultActivity class. The result comes from the test engine.
+		 */
 		@Override
 		protected void onPostExecute(String result) {
 			
@@ -155,6 +172,10 @@ public class VisionFieldActivity extends Activity{
 			finish();
 		}
 
+		/**
+		 * update() is called from DotEngine, which is an observable class. This method
+		 * forwards the data to onProgressUpdate() by using the publishProgress() method.
+		 */
 		@Override
 		public void update(Observable observable, Object data) {
 			publishProgress(data);

@@ -34,8 +34,6 @@ public class DotEngine extends Observable {
 			int halfHeight = height/2;
 			this.height = (2 * this.width) / 3;
 			originY = halfHeight-(this.height/2);
-		} else {
-			// TODO
 		}
 		
 		seenPoints = new LinkedList<PointF>();
@@ -49,6 +47,9 @@ public class DotEngine extends Observable {
 		
 	}
 	
+	/**
+	 * createDotList creates a list of given dots to be tested. Also, the method shuffles the list.
+	 */
 	private LinkedList<PointF> createDotList() {
 		
 		LinkedList<PointF> relativePointList = new LinkedList<PointF>();
@@ -148,36 +149,54 @@ public class DotEngine extends Observable {
 		return list;
 	}
 	
+	/**
+	 * nextDot polls and return a dot from pointList, the list of points to be tested.
+	 */
 	public PointF nextDot() {
 		
 		// Poll a PointF from the point list.
-		if(!missedTest)
+		if(!missedTest) {
 			return pointList.poll();
-		else
-		{
+		
+		} else {
+			
 			//If the missed-test is running, pull dots from seen and missed dots.
-			//Requires atleast one seen point.
+			//Requires at least one seen point.
 			if(flag){
+				
 				if(seenPoints.get(seenPos)== null)
 					seenPos = 0;
+				
 				flag = false;
 				return seenPoints.get(seenPos++);
-			}
-			else
+			
+			} else {
 				flag = true;
 				return missedPoints.poll();
+			}
 		}
 			
 	}
 	
+	/**
+	 * getNumOfDots returns number of dots in the test.
+	 */
 	public int getNumOfDots() {
 		return numOfDots;
 	}
 	
+	/**
+	 * getTestDots returns the dots in the test.
+	 */
 	public List<PointF> getTestDots() {
 		return originalPointList;
 	}
 	
+	/**
+	 * runTest runs the test, which means: notify observers with dots to be tested,
+	 * wait, put the dot either in a list of seen dots, or a list of missed dots.
+	 * runTest should be executed in a thread.
+	 */
 	public void runTest() {
 		
 		PointF point = null;
@@ -215,7 +234,8 @@ public class DotEngine extends Observable {
 				else
 					missedPoints.add(point);
 			}
-			//If missed-test is running, missed points should not be added again.
+			
+			// If missed-test is running, missed points should not be added again.
 			else{
 				if(dotRegistered && flag)
 					seenPoints.add(point);
@@ -224,11 +244,18 @@ public class DotEngine extends Observable {
 		
 	}
 	
+	/**
+	 * This method should be called after runTest() method. This test tests missed dots one more time.
+	 */
 	public void runMissed(){
 		missedTest = true;
 		runTest();
 		missedTest = false;
 	}
+	
+	/**
+	 * getSeenDots returns a list of dots registered by the user. If all points are not tested, null is returned.
+	 */
 	public List<PointF> getSeenDots() {
 		if (pointList.size() == 0)
 			return seenPoints;
@@ -236,6 +263,9 @@ public class DotEngine extends Observable {
 			return null;
 	}
 	
+	/**
+	 * registerDot sets dotRegistered to true. dotRegistered is used in runTest to know if the user saw the dot.
+	 */
 	public void registerDot() {
 		dotRegistered = true;
 	}

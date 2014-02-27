@@ -16,15 +16,17 @@ public class VisionFieldTestResultActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
+		// Get the results from the test activity.
 		String resultString = getIntent().getStringExtra("resultString");
 		HashMap<PointF, Boolean> resultMap = 
 				(HashMap<PointF, Boolean>) getIntent().getSerializableExtra("resultMap");
 		
+		// Check if the results really are results.
 		if (resultString != null && !resultString.equals("") && resultMap != null) {
 			
 			Toast.makeText(this, resultString, Toast.LENGTH_LONG).show();
 			
+			// Set view.
 			resultView = new VisionFieldResultView(this);
 			setContentView(resultView);
 			
