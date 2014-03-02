@@ -6,27 +6,40 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.AudioEncoder;
 import android.media.MediaRecorder.VideoEncoder;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
 
 public class PupilActivity extends Activity implements SurfaceHolder.Callback {
+	
     private SurfaceView prSurfaceView;
     private Button prStartBtn;
     private boolean prRecordInProcess;
     private SurfaceHolder prSurfaceHolder;
     private Camera prCamera;
 	private final String cVideoFilePath = Environment.getExternalStorageDirectory().getPath() + "/glaucoma_video/";
+	
+	/** FLASHLIGHT FIELDS **/
+	private boolean isLightOn = false;
+	private int nr_test=3;
+	private int flashTimeMs = 500;
+	private int waitTimeMs =2000;
+	
+	private Button button;
     
 	private Context prContext;
     @SuppressWarnings("deprecation")
@@ -56,6 +69,74 @@ public class PupilActivity extends Activity implements SurfaceHolder.Callback {
         prSurfaceHolder.addCallback(this);
         prSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 		prMediaRecorder = new MediaRecorder();
+		
+		/** FLASHLIGHT INITIALIZE **/
+		button = (Button) findViewById(R.id.buttonFlashlight);
+		
+		Context context = this;
+		PackageManager pm = context.getPackageManager();
+
+		// if device support camera?
+		if (!pm.hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
+			Log.e("err", "Device has no camera!");
+			return;
+		}
+		
+		
+		button.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+
+				if (!isLightOn) {
+					isLightOn = true;
+					final Parameters p = prCamera.getParameters();
+					
+					Log.i("info", "torch is turn off!");
+
+					for(int i=0;i<=nr_test;i++){
+						
+						Log.i("info", "torch is turn on!");
+						
+						p.setFlashMode(Parameters.FLASH_MODE_TORCH);
+	
+						prCamera.setParameters(p);
+						prCamera.startPreview();
+						
+						changeIntensity();
+						changeIntensity();
+						
+						//How many ms the flashlight will be on
+						try {
+						    Thread.sleep(flashTimeMs);
+						} catch(InterruptedException ex) {
+						    Thread.currentThread().interrupt();
+						}
+						//film
+						//
+						
+						p.setFlashMode(Parameters.FLASH_MODE_OFF);
+						prCamera.setParameters(p);
+						prCamera.stopPreview();
+						 
+						//time to wait between flash
+						try {
+						    Thread.sleep(waitTimeMs);
+						} catch(InterruptedException ex) {
+						    Thread.currentThread().interrupt();
+						}
+					}
+					//
+					
+					isLightOn = false;
+
+
+				} 
+
+			}
+
+			
+		});
     }
 
 	//@Override
@@ -195,5 +276,20 @@ public class PupilActivity extends Activity implements SurfaceHolder.Callback {
     		}
     		break;
     	}
+	}
+	
+	@Override
+	protected void onStop() {
+		super.onStop();
+
+		if (prCamera != null) {
+			prCamera.release();
+		}
+	}
+	
+	public void changeIntensity()
+	{
+	    prCamera.stopPreview();
+	    prCamera.startPreview();
 	}
 }

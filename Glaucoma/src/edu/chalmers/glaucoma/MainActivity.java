@@ -42,13 +42,18 @@ public class MainActivity extends Activity {
 		return true;
 	}
 	
-	public void startPupilActivity() {
+	public void startPupilMonitorActivity() {
 		Intent i =  new Intent(this, PupilMonitorActivity.class);
 		startActivity(i);
 	}
 	
 	public void startVisionFieldActivity() {
 		Intent i =  new Intent(this, VisionFieldActivity.class);
+		startActivity(i);
+	}
+	
+	public void startPupilActivity() {
+		Intent i =  new Intent(this, PupilActivity.class);
 		startActivity(i);
 	}
 	
@@ -59,6 +64,8 @@ public class MainActivity extends Activity {
 			startPupilActivity();
 		} else if (item.getItemId() == R.id.syntest) {
 			startVisionFieldActivity();
+		} else if (item.getItemId() == R.id.pupillmonitor) {
+			startPupilMonitorActivity();
 		}
 		
 		return super.onOptionsItemSelected(item);

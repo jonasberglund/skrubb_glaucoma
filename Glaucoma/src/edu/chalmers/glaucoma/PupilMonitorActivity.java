@@ -153,12 +153,12 @@ public class PupilMonitorActivity extends Activity implements CvCameraViewListen
     
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 		
-    	mRgba = inputFrame.rgba();
-		mGrey = inputFrame.gray();
+    	mRgba = inputFrame.rgba().t();
+		mGrey = inputFrame.gray().t();
 		
 		findFeatures();
 
-        return mRgba;
+        return mRgba.t();
     }
     
     private void findFeatures() {
@@ -176,7 +176,7 @@ public class PupilMonitorActivity extends Activity implements CvCameraViewListen
     		findIris(mRgba.submat(eyesArray[i]));
     		
     		// DRAW IRIS
-    		Core.rectangle(mRgba, eyesArray[i].tl(), eyesArray[i].br(), EYE_RECT_COLOR, 1);
+    		Core.rectangle(mRgba, eyesArray[i].tl(), eyesArray[i].br(), EYE_RECT_COLOR, 2);
     	}
     }
     
@@ -206,7 +206,7 @@ public class PupilMonitorActivity extends Activity implements CvCameraViewListen
     			findPupil(mROIEye.submat(irisRect));
     			
     			// Draw iris
-    			Core.circle(mROIEye, new Point(irisRect.x + radius, irisRect.y + radius), radius, new Scalar(255, 0, 0, 255), 1);
+    			Core.circle(mROIEye, new Point(irisRect.x + radius, irisRect.y + radius), radius, new Scalar(255, 0, 0, 255), 2);
     		}
     		
     	
@@ -239,7 +239,7 @@ public class PupilMonitorActivity extends Activity implements CvCameraViewListen
     			Log.i(TAG, "-------------------- FOUND PUPIL ----------------------");
     			
     			// Draw pupil
-    			Core.circle(mROIIris, new Point(pupilRect.x + radius, pupilRect.y + radius), radius, new Scalar(0, 0, 255, 255), 1);
+    			Core.circle(mROIIris, new Point(pupilRect.x + radius, pupilRect.y + radius), radius, new Scalar(0, 0, 255, 255), 2);
     		}
     	}
     	

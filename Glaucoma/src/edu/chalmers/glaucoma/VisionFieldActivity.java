@@ -51,6 +51,7 @@ public class VisionFieldActivity extends Activity{
 		
 	}
 	
+	@Override
 	public boolean onTouchEvent(MotionEvent e) {
 		
 		if (e.getAction() == MotionEvent.ACTION_DOWN) {
