@@ -40,6 +40,10 @@
             android:name="edu.chalmers.glaucoma.PupilMonitorActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+        <activity 
+            android:name="edu.chalmers.glaucoma.ColorChangeActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
     </application>
 
 </manifest>

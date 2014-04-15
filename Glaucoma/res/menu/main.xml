@@ -17,6 +17,7 @@
         android:orderInCategory="100"
         android:showAsAction="never"
         android:title="@string/pupillmonitor"
-		/> 
+		/>
+    <item android:id="@+id/colorchange" android:title="@string/colorchange" android:showAsAction="never" android:orderInCategory="100"></item> 
 
 </menu>

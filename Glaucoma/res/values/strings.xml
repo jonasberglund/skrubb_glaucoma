@@ -13,5 +13,6 @@
     <string name="distanceButton">Okej, starta testet!</string>
     <string name="flash">Flash</string>
     <string name="pupillmonitor">Pupillmonitor</string>
+    <string name="colorchange">Färgskillnadstest</string>
     
 </resources>

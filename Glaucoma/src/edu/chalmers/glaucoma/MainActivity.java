@@ -32,7 +32,15 @@ public class MainActivity extends Activity {
 				startPupilActivity();
 			}
 		});
-         
+        
+		//Color button
+		 final Button button_color = (Button) findViewById(R.id.button_start_color);
+		 button_color.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startColorChangeActivity();
+			}
+		});
 	}
 
 	@Override
@@ -57,6 +65,11 @@ public class MainActivity extends Activity {
 		startActivity(i);
 	}
 	
+	public void startColorChangeActivity() {
+		Intent i =  new Intent(this, ColorChangeActivity.class);
+		startActivity(i);
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		
@@ -66,6 +79,8 @@ public class MainActivity extends Activity {
 			startVisionFieldActivity();
 		} else if (item.getItemId() == R.id.pupillmonitor) {
 			startPupilMonitorActivity();
+		} else if (item.getItemId() == R.id.colorchange) {
+			startColorChangeActivity();
 		}
 		
 		return super.onOptionsItemSelected(item);
