@@ -11,14 +11,13 @@ public class ColorDotEngine extends Observable {
 		
 		// Instance variables.
 		private int width, height;
-		private int centerX, centerY, startX = 0, startY = 0, endX, endY;
+		private int centerX, centerY, startX = 0, startY = 0;
 		private boolean dotRegistered;
 		private LinkedList<PointF> pointList;
-		private LinkedList<PointF> originalPointList;
 		private List<PointF> noticedChanges;
-		private boolean flag = false;
-		private int seenPos = 0;
 		private int noticedPoints = 0;
+		private int[] colors, radiuses;
+		private Integer color;
 		
 		public ColorDotEngine(int width, int height) {
 			if(width >0 && height >0){	//check so resolution given is valid
@@ -41,53 +40,27 @@ public class ColorDotEngine extends Observable {
 				centerY = this.height / 2;
 				startX = (width - this.width) / 2;
 				startY = (height - this.height) / 2;
-				endX = this.width;
-				endY = this.height;
 				
 				noticedChanges = new LinkedList<PointF>();
 				pointList = new LinkedList<PointF>();
-				
-				// Create a list of points that have to be tested.
-				originalPointList = createDotList();
-				pointList = (LinkedList<PointF>) originalPointList.clone();
-				}
+				colors = new int[3];
+				radiuses = new int[3];
+				addColors();
+				addRadiuses();
+			}
 		}
 		
-		private LinkedList<PointF> createDotList() {
-			
-			LinkedList<PointF> relativePointList = new LinkedList<PointF>();
-			
-			// (relative) points to be tested.
-			relativePointList.add(new PointF(0.1f, 0.5f));
-			relativePointList.add(new PointF(0.2f, 0.4f));
-			relativePointList.add(new PointF(0.3f, 0.3f));
-			relativePointList.add(new PointF(0.4f, 0.2f));
-			relativePointList.add(new PointF(0.5f, 0.1f));
-			relativePointList.add(new PointF(0.6f, 0.2f));
-			relativePointList.add(new PointF(0.7f, 0.3f));
-			relativePointList.add(new PointF(0.8f, 0.4f));
-			relativePointList.add(new PointF(0.9f, 0.5f));
-			
-			relativePointList.add(new PointF(0.8f, 0.6f));
-			relativePointList.add(new PointF(0.7f, 0.7f));
-			relativePointList.add(new PointF(0.6f, 0.8f));
-			relativePointList.add(new PointF(0.5f, 0.9f));
-			relativePointList.add(new PointF(0.4f, 0.8f));
-			relativePointList.add(new PointF(0.3f, 0.7f));
-			relativePointList.add(new PointF(0.2f, 0.6f));
-			
-			
-			LinkedList<PointF> list = new LinkedList<PointF>();
-			
-			// Add points
-			for (PointF p : relativePointList)
-				list.add(new PointF(startX + (p.x * width), startY + (p.y * height)));
-			
-			return list;
+		private void addColors(){
+			colors[0] = -65536; //red
+			colors[1] = -16776961; //blue
+			colors[2] =  -16711936; //green
 		}
-		
+		private void addRadiuses(){
+			for(int r = 1; r < 4; r++){
+				radiuses[r-1]= (centerY/4)* r; 
+			}
+		}
 		public PointF nextDot() {
-			
 			// Poll a PointF from the point list.
 			return pointList.poll();
 
@@ -97,94 +70,52 @@ public class ColorDotEngine extends Observable {
 			return noticedPoints;
 		}
 		
-		public List<PointF> getTestDots() {
-			return originalPointList;
-		}
-		
-		public void runTest() {
-			
-			PointF point = null;
-			PointF pointNext = new PointF();
-			
-			while ((point = nextDot()) != null ) {
-				
-				//the next point is used to determine the direction to move in.
-				pointNext = pointList.peek();
-				if(pointNext == null){
-					pointNext = originalPointList.peek(); //for the last dot, look at the first dot
+		public void runTest(){
+			for(int c = 0; c < 3; c++){
+				for(int r = 0; r < 3; r++){
+					runCircleTest(colors[c],radiuses[r]);
 				}
-				dotRegistered = false;
-				
-				// Give a new point
-				setChanged();
-				notifyObservers(point);
-				clearChanged();
-				
-				// Add seen dots to a list. Missed dots are added to another.
-				while(!dotRegistered){
-					if((point.x < pointNext.x) && (point.y < pointNext.y))
-						point.set((point.x + 1),(point.y + 1));
-					
-					else if((point.x > pointNext.x) && (point.y > pointNext.y))
-						point.set((point.x - 1),(point.y - 1));
-					
-					else if((point.x > pointNext.x) && (point.y < pointNext.y))
-						point.set((point.x - 1),(point.y + 1));
-					
-					else if((point.x < pointNext.x) && (point.y > pointNext.y))
-						point.set((point.x + 1),(point.y - 1));
-						
-
-					// Give a new point
-					setChanged();
-					notifyObservers(point);
-					clearChanged();
-					
-					long time = System.currentTimeMillis() + 100;
-					while (time > System.currentTimeMillis());
-					
-				}
-				
-				noticedChanges.add(point);
 			}
-			noticedPoints = noticedChanges.size();
-			
 		}
 		
-		public void runCircleTest(){
+		public void runCircleTest(int c, int radius){
+			
 			PointF point = new PointF();
-			int radius = centerY - 30;
+			this.color = new Integer(c);	//package the int to an integer for sending
 			int degree = 0;
 			double radian = 0.0174532925;
 			double angle;
 			
+			setChanged();
+			notifyObservers(this.color);
+			clearChanged();
+
 			while(degree < 360){
-				
 				dotRegistered = false;
 				
 				while(!dotRegistered){
-					angle = degree * radian;
-					int x = (int)Math.round(radius * Math.sin(angle));
-					int y = (int)Math.round(radius * Math.cos(angle));
-					point.set(centerX + startX + x , centerY + startY + y);
-					if(degree == 360) break;
-					else degree = degree + 1;
-					
-					// Give a new point
-					setChanged();
-					notifyObservers(point);
-					clearChanged();
-					
-					long time = System.currentTimeMillis() + 40;
-					while (time > System.currentTimeMillis());
+						
+						angle = degree * radian;
+						int x = (int)Math.round(radius * Math.sin(angle));
+						int y = (int)Math.round(radius * Math.cos(angle));
+						point.set(centerX + startX + x , centerY + startY + y);
+						if(degree == 360) break;
+						else degree = degree + 1;
+						
+						// Give a new point
+						setChanged();
+						notifyObservers(point);
+						clearChanged();
+						//wait before moving on
+						long time = System.currentTimeMillis() + 20;
+						while (time > System.currentTimeMillis());
 				}
 				if(dotRegistered){
 					noticedChanges.add(new PointF(point.x, point.y));
 					noticedPoints = noticedPoints + 1;
+					
 				}
-			}
-			
-			
+			}	
 		}
 		public List<PointF> getDots() {
 			if (getNumOfDots()>0)
