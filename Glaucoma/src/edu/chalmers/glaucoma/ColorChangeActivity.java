@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
-import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,7 +14,6 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.widget.Toast;
 import edu.chalmers.glaucoma.Color.ColorDotEngine;
 import edu.chalmers.glaucoma.Color.ColorChangeView;
 import edu.chalmers.glaucoma.visionfield.VisionFieldDistance;
@@ -116,7 +114,8 @@ public class ColorChangeActivity extends Activity{
 
 			testIsRunning = true;
 			engine.addObserver(ColorChangeTask.this);
-			engine.runTest();
+			engine.runCircleTest();
+			//engine.runTest();
 			testIsRunning = false;
 			
 			return engine.getNumOfDots() + ".";
@@ -124,12 +123,9 @@ public class ColorChangeActivity extends Activity{
 		
 		@Override
 		protected void onProgressUpdate(Object... progress) {
-			//if points, draw them
+			
 			if (progress[0] instanceof PointF) {
 				testView.drawDot((PointF)progress[0]);
-			}//if integer, change the paint color
-			else if(progress[0] instanceof Integer){
-				testView.setColor(((Integer)progress[0]).intValue());
 			}
 		}
 		
