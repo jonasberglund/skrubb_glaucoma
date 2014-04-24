@@ -1,6 +1,8 @@
 package edu.chalmers.glaucoma;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -136,23 +138,16 @@ public class ColorChangeActivity extends Activity{
 		@Override
 		protected void onPostExecute(String result) {
 			
-			HashMap<PointF, Boolean> resultMap = new HashMap<PointF, Boolean>();
-			
-			// Set registered dots to 'true'
-			if(engine.getDots()!= null){
-				for (PointF p : engine.getDots())
-					resultMap.put(p, true);
-			}			
+			// Show the result in another activity.
+			Intent i = new Intent(ColorChangeActivity.this,ColorChangeResultActivity.class);
+			i.putExtra("resultString", "Result: " + result);
+			i.putExtra("resultMap", engine.getDots());
+			i.putExtra("colors", engine.getColors());
+			i.putExtra("numColor", engine.getNumChangesColor());
 			// Set engine to null.
 			engine = null;
-			
-			// Show the result in another activity.
-			Intent i = new Intent(ColorChangeActivity.this, VisionFieldTestResultActivity.class);
-			i.putExtra("resultString", "Result: " + result);
-			i.putExtra("resultMap", resultMap);
 			startActivity(i);
-			
-			// Stop this activity.
+			// Stop this activity.*/
 			finish();
 		}
 

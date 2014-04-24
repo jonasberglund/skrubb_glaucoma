@@ -1,6 +1,5 @@
 package edu.chalmers.glaucoma.Color;
 
-import android.R.integer;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -18,7 +17,7 @@ public class ColorChangeView extends View {
 		super(context);
 		
 		// Set the background color
-		setBackgroundColor(Color.WHITE);
+		setBackgroundColor(Color.BLACK);
 	}
 	
 	private void drawCross(Canvas canvas, int x, int y, int color) {
@@ -46,7 +45,7 @@ public class ColorChangeView extends View {
 	protected void onDraw(Canvas canvas) {
 	
 		// Draw a cross on the screen.
-		drawCross(canvas, getWidth()/2, getHeight()/2, Color.BLACK);
+		drawCross(canvas, getWidth()/2, getHeight()/2, Color.WHITE);
 		
 		// Draw the dot.
 		if (dot != null)

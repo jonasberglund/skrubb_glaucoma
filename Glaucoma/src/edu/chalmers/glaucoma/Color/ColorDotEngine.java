@@ -1,6 +1,8 @@
 package edu.chalmers.glaucoma.Color;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
@@ -13,10 +15,9 @@ public class ColorDotEngine extends Observable {
 		private int width, height;
 		private int centerX, centerY, startX = 0, startY = 0;
 		private boolean dotRegistered;
-		private LinkedList<PointF> pointList;
-		private List<PointF> noticedChanges;
-		private int noticedPoints = 0;
-		private int[] colors, radiuses;
+		private HashMap<Integer, PointF> noticedChanges;
+		private int noticedPoints = 0, numColors = 3, numRadiuses = 3;
+		private int[] colors, radiuses, numChangesColor;
 		private Integer color;
 		
 		public ColorDotEngine(int width, int height) {
@@ -41,10 +42,10 @@ public class ColorDotEngine extends Observable {
 				startX = (width - this.width) / 2;
 				startY = (height - this.height) / 2;
 				
-				noticedChanges = new LinkedList<PointF>();
-				pointList = new LinkedList<PointF>();
-				colors = new int[3];
-				radiuses = new int[3];
+				noticedChanges = new HashMap<Integer, PointF>();
+				colors = new int[numColors];
+				radiuses = new int[numRadiuses];
+				numChangesColor = new int[numColors];
 				addColors();
 				addRadiuses();
 			}
@@ -56,14 +57,9 @@ public class ColorDotEngine extends Observable {
 			colors[2] =  -16711936; //green
 		}
 		private void addRadiuses(){
-			for(int r = 1; r < 4; r++){
-				radiuses[r-1]= (centerY/4)* r; 
+			for(int r = 0; r < numRadiuses; r++){
+				radiuses[r]= (centerY/4)*(r+1); 
 			}
-		}
-		public PointF nextDot() {
-			// Poll a PointF from the point list.
-			return pointList.poll();
-
 		}
 		
 		public int getNumOfDots() {
@@ -71,34 +67,34 @@ public class ColorDotEngine extends Observable {
 		}
 		
 		public void runTest(){
-			for(int c = 0; c < 3; c++){
-				for(int r = 0; r < 3; r++){
-					runCircleTest(colors[c],radiuses[r]);
+			for(int c = 0; c < numColors; c++){
+				numChangesColor[c]=0;
+				for(int r = 0; r < numRadiuses; r++){
+					runFirstTest(colors[c],radiuses[r], c);
 				}
 			}
 		}
 		
-		public void runCircleTest(int c, int radius){
+		public void runFirstTest(int color, int radius, int colorCount ){
 			
-			PointF point = new PointF();
-			this.color = new Integer(c);	//package the int to an integer for sending
+			this.color = color;	//package the int to an integer for sending
 			int degree = 0;
 			double radian = 0.0174532925;
 			double angle;
+			PointF point = new PointF();
 			
 			setChanged();
 			notifyObservers(this.color);
 			clearChanged();
-
+			dotRegistered = false;
+			
 			while(degree < 360){
-				dotRegistered = false;
-				
 				while(!dotRegistered){
-						
 						angle = degree * radian;
-						int x = (int)Math.round(radius * Math.sin(angle));
+						int x = (int)Math.round((radius + 20) * Math.sin(angle));
 						int y = (int)Math.round(radius * Math.cos(angle));
 						point.set(centerX + startX + x , centerY + startY + y);
+						
 						if(degree == 360) break;
 						else degree = degree + 1;
 						
@@ -107,17 +103,26 @@ public class ColorDotEngine extends Observable {
 						notifyObservers(point);
 						clearChanged();
 						//wait before moving on
-						long time = System.currentTimeMillis() + 20;
+						long time = System.currentTimeMillis() + radius/2;
 						while (time > System.currentTimeMillis());
 				}
 				if(dotRegistered){
-					noticedChanges.add(new PointF(point.x, point.y));
+					noticedChanges.put(noticedPoints, new PointF(point.x, point.y));
+					numChangesColor[colorCount]++;
 					noticedPoints = noticedPoints + 1;
-					
+					dotRegistered = false;
 				}
-			}	
+			}
 		}
-		public List<PointF> getDots() {
+		
+		public int[] getColors(){
+			return colors;
+		}
+		public int[] getNumChangesColor(){
+			return numChangesColor;
+		}
+
+		public HashMap<Integer, PointF> getDots() {
 			if (getNumOfDots()>0)
 				return noticedChanges;
 			else
