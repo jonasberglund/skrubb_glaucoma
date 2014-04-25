@@ -84,7 +84,7 @@ public class ColorChangeActivity extends Activity{
 			    	
 			    
 			    }
-			    	//Toast.makeText(this, getString(R.string.distanceMessage)+ dist, Toast.LENGTH_LONG).show();
+			    //Toast.makeText(this, getString(R.string.distanceMessage)+ dist, Toast.LENGTH_LONG).show();
 /*			    
 			    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 			    alertBuilder.setTitle(getString(R.string.distanceHeader));
@@ -121,7 +121,7 @@ public class ColorChangeActivity extends Activity{
 			engine.runTest();
 			testIsRunning = false;
 			
-			return engine.getNumOfDots() + ".";
+			return engine.getNumFoundDots() + ".";
 		}
 		
 		@Override
@@ -131,7 +131,7 @@ public class ColorChangeActivity extends Activity{
 				testView.drawDot((PointF)progress[0]);
 			}//if integer, change the paint color
 			else if(progress[0] instanceof Integer){
-				testView.setColor(((Integer)progress[0]).intValue());
+				testView.setDetails(((Integer)progress[0]).intValue());
 			}
 		}
 		
@@ -143,7 +143,7 @@ public class ColorChangeActivity extends Activity{
 			i.putExtra("resultString", "Result: " + result);
 			i.putExtra("resultMap", engine.getDots());
 			i.putExtra("colors", engine.getColors());
-			i.putExtra("numColor", engine.getNumChangesColor());
+			i.putExtra("numColor", engine.getNumChangesColor2());
 			// Set engine to null.
 			engine = null;
 			startActivity(i);

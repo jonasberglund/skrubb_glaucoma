@@ -20,6 +20,7 @@ public class ColorChangeResultActivity extends Activity{
 		
 		
 		String resultString = getIntent().getStringExtra("resultString");
+		Toast.makeText(this, resultString, Toast.LENGTH_LONG).show();
 		HashMap<Integer, PointF> resultMap = (HashMap<Integer, PointF>) getIntent().getSerializableExtra("resultMap");
 		int[] colors = (int[]) getIntent().getIntArrayExtra("colors");
 		int[] numColor = (int[]) getIntent().getIntArrayExtra("numColor");

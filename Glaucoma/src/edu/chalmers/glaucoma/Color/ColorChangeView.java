@@ -12,6 +12,7 @@ public class ColorChangeView extends View {
 	// Instance variables.
 	private Paint paint = new Paint();
 	private PointF dot = null;
+	private int size = 30;
 
 	public ColorChangeView(Context context) {
 		super(context);
@@ -38,8 +39,18 @@ public class ColorChangeView extends View {
 		// Reset the paint color.
 		paint.setColor(tempColor);
 	}
-	public void setColor(int color){
+	public void setDetails(int data){	//figure out if the sent data affects color or size
+		if(0<data && data<1000){
+			setSize(data);
+		}
+		else setColor(data);
+	}
+	
+	private void setColor(int color){
 		paint.setColor(color);
+	}
+	private void setSize(int size){
+		this.size = size;
 	}
 	
 	protected void onDraw(Canvas canvas) {
@@ -49,7 +60,7 @@ public class ColorChangeView extends View {
 		
 		// Draw the dot.
 		if (dot != null)
-			canvas.drawCircle(dot.x,dot.y , 30, paint );
+			canvas.drawCircle(dot.x,dot.y , size, paint );
 			
 	}
 	
