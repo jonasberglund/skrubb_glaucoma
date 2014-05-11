@@ -55,12 +55,11 @@ public class ColorChangeView extends View {
 	
 	protected void onDraw(Canvas canvas) {
 	
-		// Draw a cross on the screen.
-		drawCross(canvas, getWidth()/2, getHeight()/2, Color.WHITE);
-		
-		// Draw the dot.
+		// Draw the moving dot and the stationary dot.
 		if (dot != null)
 			canvas.drawCircle(dot.x,dot.y , size, paint );
+			canvas.drawCircle(getWidth()/2,getHeight()/2, size, paint );
+		
 			
 	}
 	

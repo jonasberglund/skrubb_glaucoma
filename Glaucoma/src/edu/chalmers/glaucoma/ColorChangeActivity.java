@@ -85,7 +85,7 @@ public class ColorChangeActivity extends Activity{
 			    
 			    }
 			    //Toast.makeText(this, getString(R.string.distanceMessage)+ dist, Toast.LENGTH_LONG).show();
-/*			    
+			    
 			    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 			    alertBuilder.setTitle(getString(R.string.distanceHeader));
 			    alertBuilder.setMessage(getString(R.string.distanceMessage)+ dist +"mm\n");
@@ -97,7 +97,7 @@ public class ColorChangeActivity extends Activity{
 			      });
 			    AlertDialog infoDialog = alertBuilder.create();
 			    infoDialog.show();
-*/			    				
+			    				
 				// Initialize the dot engine
 				if (engine == null)
 					engine = new ColorDotEngine(testView.getWidth(), testView.getHeight());
