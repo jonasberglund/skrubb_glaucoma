@@ -240,6 +240,7 @@ public class PupilMonitorActivity extends Activity implements CvCameraViewListen
     			
     			// Draw pupil
     			Core.circle(mROIIris, new Point(pupilRect.x + radius, pupilRect.y + radius), radius, new Scalar(0, 0, 255, 255), 2);
+    			Log.i(TAG, "DIAMITER " + 2*radius);
     		}
     	}
     	
