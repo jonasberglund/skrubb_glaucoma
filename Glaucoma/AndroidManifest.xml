@@ -27,7 +27,9 @@
             </intent-filter>
         </activity>
         <activity 
-         	android:name="edu.chalmers.glaucoma.PupilActivity" />
+         	android:name="edu.chalmers.glaucoma.PupilActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
         <activity 
             android:name="edu.chalmers.glaucoma.VisionFieldActivity"
             android:screenOrientation="landscape"
@@ -38,6 +40,10 @@
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
                 <activity 
             android:name="edu.chalmers.glaucoma.PupilMonitorActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
+        <activity 
+            android:name="edu.chalmers.glaucoma.PupilRecordActivity"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" />
     </application>
