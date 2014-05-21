@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical" >
+android:layout_height="match_parent" >
 
-<SurfaceView
-    android:id="@+id/surface_camera"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
-
-<Button
-    android:id="@+id/main_btn1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/start" />
-
-<Button
-    android:id="@+id/buttonFlashlight"
+    <Button
+        android:id="@+id/startbutton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="" />
+    
+    <Button
+    android:id="@+id/recordbutton"
+    style="?android:attr/buttonStyleSmall"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_alignParentRight="true"
     android:layout_alignParentTop="true"
-    android:text="@string/flash" />
+    android:text="@string/recordbutton" />
 	
 </RelativeLayout>

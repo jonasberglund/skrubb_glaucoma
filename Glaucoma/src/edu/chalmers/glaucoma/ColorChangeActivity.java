@@ -87,8 +87,8 @@ public class ColorChangeActivity extends Activity{
 			    //Toast.makeText(this, getString(R.string.distanceMessage)+ dist, Toast.LENGTH_LONG).show();
 			    
 			    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
-			    alertBuilder.setTitle(getString(R.string.distanceHeader));
-			    alertBuilder.setMessage(getString(R.string.distanceMessage)+ dist +"mm\n");
+			    alertBuilder.setTitle(getString(R.string.colorchangeDistanceHeader));
+			    alertBuilder.setMessage(getString(R.string.colorchangeDistanceMessage)+ dist +"mm\n");
 			    alertBuilder.setPositiveButton(getString(R.string.distanceButton),
 			      new DialogInterface.OnClickListener() {
 			       public void onClick(DialogInterface dialog, int number) {

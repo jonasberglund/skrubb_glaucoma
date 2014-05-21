@@ -32,14 +32,14 @@ public class PupilActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_pupilmenu);
+        setContentView(R.layout.activity_pupil);
 		
         pupilCalculate = new PupilCalculate();
         
         
 		/** Start BUTTON **/
         button_start = (Button) findViewById(R.id.startbutton);
-        button_start.setText("Start");
+        button_start.setText(R.string.start);
         button_start.setOnClickListener(new View.OnClickListener() {
 			//@Override
 			public void onClick(View v) {
@@ -47,6 +47,21 @@ public class PupilActivity extends Activity {
 
 					startTest();
 					//recordPupil();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+			}
+		});
+        
+        /** Record BUTTON **/
+        button_start = (Button) findViewById(R.id.recordbutton);
+        button_start.setText(R.string.recordbutton);
+        button_start.setOnClickListener(new View.OnClickListener() {
+			//@Override
+			public void onClick(View v) {
+				try {    	
+					recordPupil();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

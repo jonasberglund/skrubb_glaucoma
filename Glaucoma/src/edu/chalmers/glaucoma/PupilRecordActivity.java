@@ -38,7 +38,7 @@ public class PupilRecordActivity extends Activity implements SurfaceHolder.Callb
 	private static final int REQUEST_DECODING_OPTIONS = 0;
 	
 	/** FLASHLIGHT FIELDS **/
-	private int nr_test=3;
+	private int nr_test = 4;
 	private int flashTimeMs = 50;
 	private int waitTimeMs =2000;
 	private Button button;
@@ -52,7 +52,7 @@ public class PupilRecordActivity extends Activity implements SurfaceHolder.Callb
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         prContext = this.getApplicationContext();
-        setContentView(R.layout.activity_pupil);
+        setContentView(R.layout.activity_record);
         Utils.createDirIfNotExist(cVideoFilePath);
         
         prSurfaceView = (SurfaceView) findViewById(R.id.surface_camera);
@@ -72,7 +72,7 @@ public class PupilRecordActivity extends Activity implements SurfaceHolder.Callb
 		}
 		
 		/** Start BUTTON **/
-		prStartBtn = (Button) findViewById(R.id.main_btn1);
+		prStartBtn = (Button) findViewById(R.id.startButton);
         prStartBtn.setOnClickListener(new View.OnClickListener() {
 			//@Override
 			public void onClick(View v) {

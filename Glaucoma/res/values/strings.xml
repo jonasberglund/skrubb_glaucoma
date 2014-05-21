@@ -14,5 +14,8 @@
     <string name="flash">Flash</string>
     <string name="pupillmonitor">Pupillmonitor</string>
     <string name="colorchange">Färgskillnadstest</string>
+    <string name="recordbutton">Record</string>
+    <string name="colorchangeDistanceHeader">Färskillnadstest instruktioner</string>
+    <string name="colorchangeDistanceMessage">Håll enheten framför ett öga på det angivna avståndet. Starta sedan testet. Fokusera på den stillastående cirkeln och försök följa den andra i ögonvrån. Ifall cirklarnas färg skiljer sig så tryck på volymknappen. Det avståndet som skall hållas är:</string>
     
 </resources>
